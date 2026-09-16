@@ -1,0 +1,38 @@
+class Solution {
+    public boolean isIsomorphic(String str1, String str2) {
+       if (str1.length() != str2.length()) {
+            return false; // If the lengths are different, they cannot be isomorphic
+        }
+
+        int[] map = new int[256]; // Assuming ASCII characters
+        
+        for (int i = 0; i < str1.length(); i++) {
+            char charInStr1 = str1.charAt(i);
+            char charInStr2 = str2.charAt(i);
+
+            // If the character in str1 has been mapped to a different character in str2, return false
+            if (map[charInStr1] != 0 && map[charInStr1] != charInStr2) {
+                return false;
+            }
+
+            // If the character in str1 hasn't been mapped yet, but the character in str2 has been used, return false
+            if (map[charInStr1] == 0 && isMapped(map, charInStr2)) {
+                return false;
+            }
+
+            // Map the character in str1 to the character in str2
+            map[charInStr1] = charInStr2;
+        }
+
+        return true;
+    }
+    private static boolean isMapped(int[] map, char c) {
+        for (int i = 0; i < map.length; i++) {
+            if (map[i] == c) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+}
